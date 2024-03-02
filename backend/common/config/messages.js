@@ -12,8 +12,15 @@ const messages = {
   BOOKING: {
     BOOKING_SUCCESS: "Booking Success",
   },
+  USER: {
+    USER_CREATED: "User created Successfully",
+    USER_UPDATED: "User updated Successfully",
+    USER_DELETED: "User Deleted Successfully",
+    USER_LOGIN_SUCCESS: "User Logged Successfully",
+  },
   ERROR: {
     RUNTIME_ERROR: "Runtime error occurred",
+    FORBIDDEN: "Access has been forbidden",
   },
   DATABASE: {
     DATABASE_SUCCESS_CONNECTION: "Connected Successfully to MongoDB",
