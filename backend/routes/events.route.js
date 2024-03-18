@@ -7,6 +7,7 @@ const {
   deleteEvent,
 } = require("../controllers/event.controller");
 
+
 /**
  * Below routes are responsible for handling Event requests
  */

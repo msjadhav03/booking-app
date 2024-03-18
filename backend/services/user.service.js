@@ -3,13 +3,22 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { USER_IDENTIFIER_STATUS } = require("../common/config/constants");
 const { INVALID_USER, INVALID_PASSWORD } = USER_IDENTIFIER_STATUS;
+const saltRounds = 10;
+const JWT_SECRET = "booking-secrete";
 
 const addUserToDatabase = async (data) => {
   try {
     const { username, password, role } = data;
-    const user = new Event({ username, role, password });
-    await user.save();
-    return user;
+    let user = "";
+    bcrypt.hash(password, saltRounds, async (err, hash) => {
+      if (err) {
+        throw err;
+      } else {
+        user = new User({ username, role, password: hash });
+        await user.save();
+      }
+    });
+    return data;
   } catch (error) {
     throw error;
   }
@@ -46,7 +55,7 @@ const checkUserExists = async (data) => {
     if (!bcrypt.compareSync(password, user.password)) {
       return INVALID_PASSWORD;
     }
-    const token = jwt.sign(
+    const token = await jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       JWT_SECRET,
       { expiresIn: "1h" }

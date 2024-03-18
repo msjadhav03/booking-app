@@ -1,8 +1,8 @@
 const API_URL = {
   ADD_BOOKING: "/api/bookings",
   ADD_EVENT: "/api/events",
-  ADD_USER: "api/user",
-  LOGIN_USER: "api/login",
+  ADD_USER: "/api/user",
+  LOGIN_USER: "/api/login",
 };
 
 const USER_IDENTIFIER_STATUS = {

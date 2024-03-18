@@ -15,7 +15,8 @@ const authorizeUser = (req, res, next) => {
     (req.user.role === EVENT_ORIGANIZER &&
       req.originalUrl === `${API_VERISON}${ADD_BOOKING}`) ||
     (req.user.role === GENERAL &&
-      req.originalUrl === `${API_VERISON}${ADD_EVENT}`)
+      req.originalUrl === `${API_VERISON}${ADD_EVENT}` &&
+      req.method === "POST")
   ) {
     return res
       .status(INVALID_TOKEN)

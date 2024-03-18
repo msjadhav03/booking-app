@@ -1,5 +1,6 @@
 // server.js
 const express = require("express");
+const router = express.Router();
 const bodyParser = require("body-parser");
 const db = require("./common/utils/db");
 const EventRouter = require("./routes/events.route");
@@ -14,18 +15,11 @@ const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 
 app.use(`${API_VERISON}`, UserRouter);
-app.use(
-  `${API_VERISON}`,
-  require("./middleware/authentication.middleware").authenticateUser,
-  require("./middleware/authorization.middleware").authorizeUser,
-  EventRouter
-);
-app.use(
-  `${API_VERISON}`,
-  require("./middleware/authentication.middleware").authenticateUser,
-  require("./middleware/authorization.middleware").authorizeUser,
-  BookingRouter
-);
+
+app.use(require("./middleware/authentication.middleware").authenticateUser);
+app.use(require("./middleware/authorization.middleware").authorizeUser);
+app.use(`${API_VERISON}`, EventRouter);
+app.use(`${API_VERISON}`, BookingRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
