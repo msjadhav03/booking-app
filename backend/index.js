@@ -1,5 +1,6 @@
 // server.js
 const express = require("express");
+const cors = require("cors");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const db = require("./common/utils/db");
@@ -12,12 +13,13 @@ const { API_VERISON } = require("./common/config/constants");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.use(cors());
 app.use(bodyParser.json());
 
-app.use(`${API_VERISON}`, UserRouter);
+// app.use(`${API_VERISON}`, UserRouter);
 
-app.use(require("./middleware/authentication.middleware").authenticateUser);
-app.use(require("./middleware/authorization.middleware").authorizeUser);
+// app.use(require("./middleware/authentication.middleware").authenticateUser);
+// app.use(require("./middleware/authorization.middleware").authorizeUser);
 app.use(`${API_VERISON}`, EventRouter);
 app.use(`${API_VERISON}`, BookingRouter);
 
