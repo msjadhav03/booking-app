@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(bodyParser.json());
 
-// app.use(`${API_VERISON}`, UserRouter);
+app.use(`${API_VERISON}`, UserRouter);
 
 // app.use(require("./middleware/authentication.middleware").authenticateUser);
 // app.use(require("./middleware/authorization.middleware").authorizeUser);

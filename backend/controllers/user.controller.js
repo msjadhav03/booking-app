@@ -5,12 +5,15 @@ const {
   checkUserExists,
 } = require("../services/user.service");
 const { messages } = require("../common/config/messages");
-const { FAILED_TO_PROCESS_REQUEST, INTERNAL_SERVER_ERROR } = messages.COMMON;
+const { FAILED_TO_PROCESS_REQUEST, INTERNAL_SERVER_ERROR, INVALID_USERNAME } =
+  messages.COMMON;
 const { RUNTIME_ERROR } = messages.ERROR;
 const { USER_CREATED, USER_DELETED, USER_LOGIN_SUCCESS, USER_UPDATED } =
   messages.USER;
 const statusCodes = require("../common/config/status-codes");
 const { CREATED, SUCCESS, INVALID_REQUEST, INTERNAL_SERVER } = statusCodes;
+const { USER_IDENTIFIER_STATUS } = require("../common/config/constants");
+const { INVALID_USER, INVALID_PASSWORD } = USER_IDENTIFIER_STATUS;
 
 const addUser = async (req, res) => {
   try {
@@ -90,6 +93,13 @@ const updateUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const response = await checkUserExists(req.body);
+    if (response === INVALID_USER || response === INVALID_PASSWORD) {
+      return res.status(400).json({
+        statusCode: INVALID_REQUEST,
+        message: `${INVALID_USERNAME}`,
+        data: [],
+      });
+    }
     if (response) {
       return res.status(200).json({
         statusCode: CREATED,

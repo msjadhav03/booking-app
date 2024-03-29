@@ -1,5 +1,11 @@
 /* App.css */
 
+.main-container {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+}
 body {
   font-family: Arial, sans-serif;
   padding: 20px;
