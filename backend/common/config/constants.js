@@ -10,6 +10,10 @@ const USER_IDENTIFIER_STATUS = {
   INVALID_PASSWORD: 2,
 };
 
+const EVENT_ERRORS = {
+  EVENT_NOTFOUND: "event_not_found",
+  OUT_OF_CAPACITY: "out_of_capacity",
+};
 const USER_TYPE = {
   EVENT_ORIGANIZER: "organizer",
   GENERAL: "general",
@@ -21,4 +25,5 @@ module.exports = {
   API_VERISON,
   USER_IDENTIFIER_STATUS,
   USER_TYPE,
+  EVENT_ERRORS,
 };

@@ -2,6 +2,8 @@ const messages = {
   COMMON: {
     FAILED_TO_PROCESS_REQUEST: "Failed to process request body",
     INTERNAL_SERVER_ERROR: "Internal server error",
+    EVENT_NOT_IDENTIFIED: "Event not found",
+    EVENT_OUT_OF_CAPACITY: "Event booking is full!!",
   },
   EVENT: {
     EVENT_CREATED: "Event has been created successfully",

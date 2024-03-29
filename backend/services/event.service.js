@@ -7,8 +7,8 @@ const Event = require("../common/models/Events");
  */
 const addEventEntryToDatabase = async (data) => {
   try {
-    const { name, date, capacity } = data;
-    const event = new Event({ name, date, capacity });
+    const { name, date, capacity, location, description } = data;
+    const event = new Event({ name, date, capacity, location, description });
     await event.save();
     return event;
   } catch (error) {
