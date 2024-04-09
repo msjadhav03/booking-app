@@ -13,11 +13,8 @@ function Login({ onLogin }) {
         username,
         password,
       });
-
-      console.log("-------------------", response.data.data[0].token);
       const token = response.data.data[0].token;
       onLogin(token);
-      // Optionally, you can also save the token to local storage or session storage for persistent authentication
     } catch (error) {
       alert("Login failed");
     }
