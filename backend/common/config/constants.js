@@ -1,5 +1,6 @@
 const API_URL = {
   ADD_BOOKING: "/api/bookings",
+  DOWNLOAD_BOOKINGS: "/api/download",
   ADD_EVENT: "/api/events",
   ADD_USER: "/api/user",
   LOGIN_USER: "/api/login",
@@ -15,8 +16,8 @@ const EVENT_ERRORS = {
   OUT_OF_CAPACITY: "out_of_capacity",
 };
 const USER_TYPE = {
-  EVENT_ORIGANIZER: "organizer",
-  GENERAL: "general",
+  EVENT_ORIGANIZER: "Organizer",
+  GENERAL: "General",
 };
 const API_VERISON = "/V1/";
 

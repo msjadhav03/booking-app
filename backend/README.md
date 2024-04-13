@@ -61,7 +61,7 @@ Body
 {
     "username":"manishajadhav2323@gmail.com",
     "password":"Hello@123",
-    "role": "general"
+    "role": "General"
 }`
 
 ### POST Add Event Organiser User
@@ -73,7 +73,7 @@ Body
 `{
     "username":"manishajadhav2323@gmail.com",
     "password":"Hello@123",
-    "role": "organizer"
+    "role": "Organizer"
 }`
 
 ### PATCH Update User
@@ -85,7 +85,7 @@ Body
 `{
     "username":"manishajadhav2323@gmail.com",
     "password":"Hello@123",
-    "role": "general"
+    "role": "General"
 }`
 
 ### DELETE Delete User

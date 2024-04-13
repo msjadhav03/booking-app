@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import "./App.css";
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const handleLogin = async () => {
     try {
       const response = await axios.post("http://localhost:3001/V1/api/login", {
@@ -14,8 +14,10 @@ function Login({ onLogin }) {
         password,
       });
       const token = response.data.data[0].token;
-      onLogin(token);
+      // const role = response.data.data[0].role;
+      onLogin(token, response.data.data[0].role, username);
     } catch (error) {
+      console.log(error);
       alert("Login failed");
     }
   };

@@ -14,6 +14,8 @@ const messages = {
   },
   BOOKING: {
     BOOKING_SUCCESS: "Booking Success",
+    BOOKING_FETCHED_SUCCESSFULLY:
+      "All the booking have been fetched successfully",
   },
   USER: {
     USER_CREATED: "User created Successfully",

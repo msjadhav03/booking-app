@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./App.css";
@@ -8,6 +9,7 @@ import UserCreation from "./UserCreation";
 
 function App() {
   const [events, setEvents] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
@@ -23,6 +25,8 @@ function App() {
   const [capacityError, setCapacityError] = useState("");
   const [dateError, setDateError] = useState("");
   const [nameError, setNameError] = useState("");
+  const [role, setRole] = useState(null);
+  const [username, setUsername] = useState(null);
 
   const toggleForm = () => {
     setShowForm(!showForm);
@@ -31,9 +35,28 @@ function App() {
   useEffect(() => {
     if (token) {
       fetchEvents();
+      fetchMyBooking();
     }
   }, [token]);
 
+  const fetchMyBooking = async () => {
+    try {
+      console.log(`from fetchMyBooking`, username);
+      const userData = username.replace(/[{}]/g, "");
+      const response = await axios.get(
+        `http://localhost:3001/V1/api/bookings/${userData}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      setBookings(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch my bookings:", error);
+    }
+  };
   const fetchEvents = async () => {
     try {
       const response = await axios.get("http://localhost:3001/V1/api/events", {
@@ -112,13 +135,17 @@ function App() {
     }
   };
 
-  const handleLogin = (token) => {
+  const handleLogin = (token, role, username) => {
     setToken(token);
+    setRole(role);
+    setUsername(username);
     setLoggedIn(true);
   };
 
-  const handleUserCreation = (token) => {
+  const handleUserCreation = (token, role, username) => {
     setToken(token);
+    setRole(role);
+    setUsername(username);
     setLoggedIn(true);
   };
 
@@ -127,8 +154,38 @@ function App() {
       <h1>Event Booking App</h1>
       {!loggedIn ? (
         <div>
-          <Login onLogin={handleLogin} />
-          <UserCreation onUserCreation={handleUserCreation} />
+          <Router>
+            <div className="App">
+              <nav className="navbar">
+                <ul className="nav-list">
+                  <li className="nav-item">
+                    <Link to="/" className="nav-link">
+                      Login
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/signup" className="nav-link">
+                      Signup
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+              <Routes>
+                <Route
+                  exact="true"
+                  path="/"
+                  element={<Login onLogin={handleLogin} />}
+                ></Route>
+                <Route
+                  exact="true"
+                  path="/signup"
+                  element={<UserCreation onUserCreation={handleUserCreation} />}
+                ></Route>
+              </Routes>
+            </div>
+          </Router>
+          {/* <Login onLogin={handleLogin} />
+          <UserCreation onUserCreation={handleUserCreation} />  */}
         </div>
       ) : (
         <div className="main-container">
@@ -136,14 +193,43 @@ function App() {
             <div className="main-box">
               <div className="header-box">
                 <p>Welcome user</p>
-                <button className="open-btn" onClick={toggleForm}>
-                  Organize Event
-                </button>
+                {role !== "General" && (
+                  <button className="open-btn" onClick={toggleForm}>
+                    Organize Event
+                  </button>
+                )}
               </div>
               {/* <div className="content-box">
                 <div className="list-content"> */}
+              {role !== "Organizer" && (
+                <div className="my-bookings">
+                  <h2>Reservations</h2>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Booking No.</th>
+                        <th>Event Name</th>
+                        <th>User Email</th>
+                        <th>Event Id</th>
+                        <th>Seat Booked</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {bookings.map((booking) => (
+                        <tr key={booking["_id"]}>
+                          <td>{booking._id}</td>
+                          <td>{booking.eventName}</td>
+                          <td>{booking.user}</td>
+                          <td>{booking.event}</td>
+                          <td>{booking.noOfTickets}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
               <div className="table-container">
-                <h2>Events</h2>
+                <h2>Upcoming Events</h2>
                 {loading ? (
                   <p>Loading...</p>
                 ) : (
@@ -155,7 +241,8 @@ function App() {
                         <th>Location</th>
                         <th>Description</th>
                         <th>Capacity</th>
-                        <th>Action</th>
+                        {role !== "Organizer" && <th>Action</th>}
+                        {role !== "General" && <th>Download Link</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -166,14 +253,28 @@ function App() {
                           <td>{event.location}</td>
                           <td>{event.description}</td>
                           <td>{event.capacity}</td>
-                          <td>
-                            <button
-                              onClick={handleCreateEvent}
-                              className="button"
-                            >
-                              Book
-                            </button>
-                          </td>
+                          {role !== "Organizer" && (
+                            <td>
+                              <button
+                                onClick={handleCreateEvent}
+                                className="button"
+                              >
+                                Book
+                              </button>
+                            </td>
+                          )}
+                          {role !== "General" && (
+                            <td>
+                              <button
+                                onClick={() => {
+                                  console.log(`Do Something`);
+                                }}
+                                className="button"
+                              >
+                                Download
+                              </button>
+                            </td>
+                          )}
                         </tr>
                       ))}
                     </tbody>
@@ -181,7 +282,7 @@ function App() {
                 )}
               </div>
               {/* </div> */}
-              <div className="map"></div>
+
               {/* // </div> */}
             </div>
           )}
@@ -252,6 +353,7 @@ function App() {
                     <span className="error">{capacityError}</span>
                   )}
                 </div>
+
                 <button onClick={handleCreateEvent} className="button">
                   Create Event
                 </button>

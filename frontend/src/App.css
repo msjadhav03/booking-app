@@ -261,3 +261,122 @@ tr:hover {
   margin-top: 5px;
   display: block;
 }
+
+.navbar {
+  background-color: #4caf50; /* Green */
+  padding: 20px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  display: inline;
+  margin-right: 20px;
+  transition: transform 0.3s ease; /* Added transition */
+}
+
+.nav-item:hover {
+  transform: translateY(-3px); /* Added hover animation */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.3s ease; /* Added transition */
+}
+
+.nav-link:hover {
+  color: #45a049; /* Darker Green */
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
+
+.login-container h2 {
+  margin-bottom: 20px;
+}
+
+.login-container input {
+  width: 300px; /* Set a fixed width for the inputs */
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.login-container .button {
+  width: 300px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px auto;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.login-container .button:hover {
+  background-color: #45a049;
+}
+
+/* App.css */
+.user-creation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.user-creation-container h2 {
+  margin-bottom: 20px;
+}
+
+.user-creation-container input,
+.user-creation-container select {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.user-creation-container .button {
+  width: 300px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px auto;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.user-creation-container .button:hover {
+  background-color: #45a049;
+}

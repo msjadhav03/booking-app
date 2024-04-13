@@ -8,17 +8,34 @@ const JWT_SECRET = "booking-secrete";
 
 const addUserToDatabase = async (data) => {
   try {
-    const { username, password, role } = data;
+    const { username, password, role, firstName, lastName } = data;
+    let finalResponse = {};
     let user = "";
     bcrypt.hash(password, saltRounds, async (err, hash) => {
       if (err) {
         throw err;
       } else {
-        user = new User({ username, role, password: hash });
+        user = new User({
+          username,
+          role,
+          password: hash,
+          firstName,
+          lastName,
+        });
         await user.save();
       }
     });
-    return data;
+    const token = await jwt.sign(
+      { username: user.username, role: user.role },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    finalResponse = {
+      username,
+      token,
+      role,
+    };
+    return finalResponse;
   } catch (error) {
     throw error;
   }
@@ -56,13 +73,15 @@ const checkUserExists = async (data) => {
       return INVALID_PASSWORD;
     }
     const token = await jwt.sign(
-      { id: user.id, username: user.username, role: user.role },
+      { username: user.username, role: user.role },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
     return [
       {
         token,
+        role: user.role,
+        username: user.username,
       },
     ];
   } catch (error) {
