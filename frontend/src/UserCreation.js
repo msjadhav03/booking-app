@@ -9,10 +9,11 @@ function UserCreation({ onUserCreation }) {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("General");
 
   const handleUserCreation = async () => {
     try {
+      console.log(`role------->`, role, "------------>");
       const response = await axios.post("http://localhost:3001/V1/api/user", {
         username,
         password,
@@ -21,8 +22,9 @@ function UserCreation({ onUserCreation }) {
         role,
       });
 
-      console.log(response.data.data.token);
+      console.log(response.data);
       const token = response.data.data.token;
+
       // const role = response.data.role;
       onUserCreation(token, response.data.role);
     } catch (error) {
@@ -62,9 +64,12 @@ function UserCreation({ onUserCreation }) {
         onChange={(e) => setPassword(e.target.value)}
         className="input"
       />
+
       <select
         value={role}
-        onChange={(e) => setRole(e.target.value)}
+        onChange={(e) => {
+          setRole(e.target.value);
+        }}
         className="input"
       >
         <option value="General">General</option>

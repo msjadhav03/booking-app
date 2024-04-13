@@ -11,6 +11,14 @@ const addUserToDatabase = async (data) => {
     const { username, password, role, firstName, lastName } = data;
     let finalResponse = {};
     let user = "";
+    console.log(
+      `^^^^^^^^^^^^^^^^^^^^^^^^^`,
+      username,
+      password,
+      role,
+      firstName,
+      lastName
+    );
     bcrypt.hash(password, saltRounds, async (err, hash) => {
       if (err) {
         throw err;

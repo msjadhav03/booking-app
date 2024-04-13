@@ -143,6 +143,7 @@ function App() {
   };
 
   const handleUserCreation = (token, role, username) => {
+    console.log(`-----------`, role);
     setToken(token);
     setRole(role);
     setUsername(username);
