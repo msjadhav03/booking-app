@@ -23,8 +23,8 @@ function UserCreation({ onUserCreation }) {
 
       console.log(response.data.data.token);
       const token = response.data.data.token;
-      const role = response.data.role;
-      onUserCreation(token, role);
+      // const role = response.data.role;
+      onUserCreation(token, response.data.role);
     } catch (error) {
       alert("User creation failed");
       console.log(error);
