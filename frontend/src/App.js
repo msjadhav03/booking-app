@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./App.css";
 import Login from "./Login";
 import UserCreation from "./UserCreation";
+import BookingForm from "./BookingForm";
 
 function App() {
   const [events, setEvents] = useState([]);
@@ -16,7 +17,7 @@ function App() {
   const [description, setDescription] = useState("");
   const [capacity, setCapacity] = useState("");
   const [loading, setLoading] = useState(true); // Add loading state
-  const [token, setToken] = useState(""); // Token state
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [loggedIn, setLoggedIn] = useState(false); // Login state
   const [showForm, setShowForm] = useState(false);
   const [showPreviousContent, setShowPreviousContent] = useState(true);
@@ -27,13 +28,52 @@ function App() {
   const [nameError, setNameError] = useState("");
   const [role, setRole] = useState(null);
   const [username, setUsername] = useState(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [selectedEventName, setSelectedName] = useState(null);
+  const [selectedEventDate, setSelectedDate] = useState(null);
+  const [selectedEventLocation, setSelectedLocation] = useState(null);
+  const [selectedEventDescription, setSelectedDescription] = useState(null);
+
+  const handleBook = (eventId, name, date, location, description) => {
+    setShowBookingForm(true);
+    setSelectedEventId(eventId);
+    setSelectedDate(date);
+    setSelectedLocation(location);
+    setSelectedName(name);
+    setSelectedDescription(description);
+    setShowPreviousContent(false);
+  };
+
+  const handleBookingComplete = () => {
+    setShowBookingForm(false);
+    setShowPreviousContent(true);
+    // Refresh events or any other necessary actions
+    fetchEvents();
+  };
+
+  const handleCancelBooking = () => {
+    setShowBookingForm(false);
+    // Show other content
+    setShowPreviousContent(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    setToken(""); // Clear token state
+  };
 
   const toggleForm = () => {
     setShowForm(!showForm);
     setShowPreviousContent(!showPreviousContent);
   };
+
   useEffect(() => {
+    const token = localStorage.getItem("token");
     if (token) {
+      // Set token state if found
+      setToken(token);
       fetchEvents();
       fetchMyBooking();
     }
@@ -41,7 +81,6 @@ function App() {
 
   const fetchMyBooking = async () => {
     try {
-      console.log(`from fetchMyBooking`, username);
       const userData = username.replace(/[{}]/g, "");
       const response = await axios.get(
         `http://localhost:3001/V1/api/bookings/${userData}`,
@@ -51,12 +90,12 @@ function App() {
           },
         }
       );
-      console.log(response);
       setBookings(response.data.data);
     } catch (error) {
       console.error("Failed to fetch my bookings:", error);
     }
   };
+
   const fetchEvents = async () => {
     try {
       const response = await axios.get("http://localhost:3001/V1/api/events", {
@@ -140,14 +179,40 @@ function App() {
     setRole(role);
     setUsername(username);
     setLoggedIn(true);
+    localStorage.setItem("token", token);
   };
 
   const handleUserCreation = (token, role, username) => {
-    console.log(`-----------`, role);
     setToken(token);
     setRole(role);
     setUsername(username);
     setLoggedIn(true);
+  };
+
+  const handleDownload = async (eventId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/V1/api/download/${eventId}`,
+        {
+          responseType: "blob", // Set response type to blob
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const blob = new Blob([response.data], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "bookings.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Failed to download file:", error);
+    }
   };
 
   return (
@@ -185,24 +250,23 @@ function App() {
               </Routes>
             </div>
           </Router>
-          {/* <Login onLogin={handleLogin} />
-          <UserCreation onUserCreation={handleUserCreation} />  */}
         </div>
       ) : (
         <div className="main-container">
           {showPreviousContent && (
             <div className="main-box">
               <div className="header-box">
-                <p>Welcome user</p>
+                <p>Welcome user {username}</p>
                 {role !== "General" && (
                   <button className="open-btn" onClick={toggleForm}>
                     Organize Event
                   </button>
                 )}
+                <button onClick={handleLogout} className="logout-button">
+                  Logout
+                </button>
               </div>
-              {/* <div className="content-box">
-                <div className="list-content"> */}
-              {role !== "Organizer" && (
+              {role !== "organizer" && (
                 <div className="my-bookings">
                   <h2>Reservations</h2>
                   <table>
@@ -242,7 +306,7 @@ function App() {
                         <th>Location</th>
                         <th>Description</th>
                         <th>Capacity</th>
-                        {role !== "Organizer" && <th>Action</th>}
+                        {role === "General" && <th>Action</th>}
                         {role !== "General" && <th>Download Link</th>}
                       </tr>
                     </thead>
@@ -254,22 +318,29 @@ function App() {
                           <td>{event.location}</td>
                           <td>{event.description}</td>
                           <td>{event.capacity}</td>
-                          {role !== "Organizer" && (
+                          {role === "General" && (
                             <td>
                               <button
-                                onClick={handleCreateEvent}
+                                onClick={() =>
+                                  handleBook(
+                                    event._id,
+                                    event.name,
+                                    event.date,
+                                    event.location,
+                                    event.description
+                                  )
+                                }
                                 className="button"
                               >
                                 Book
                               </button>
                             </td>
                           )}
+
                           {role !== "General" && (
                             <td>
                               <button
-                                onClick={() => {
-                                  console.log(`Do Something`);
-                                }}
+                                onClick={() => handleDownload(event._id)}
                                 className="button"
                               >
                                 Download
@@ -282,9 +353,6 @@ function App() {
                   </table>
                 )}
               </div>
-              {/* </div> */}
-
-              {/* // </div> */}
             </div>
           )}
 
@@ -358,9 +426,29 @@ function App() {
                 <button onClick={handleCreateEvent} className="button">
                   Create Event
                 </button>
+                <button type="button" onClick={toggleForm}>
+                  Back
+                </button>
               </div>
             </div>
           )}
+        </div>
+      )}
+      {showBookingForm && (
+        <div className="booking-form-container">
+          <BookingForm
+            eventId={selectedEventId}
+            eventName={selectedEventName}
+            eventDate={selectedEventDate}
+            eventLocation={selectedEventLocation}
+            eventDescription={selectedEventDescription}
+            onBooking={handleBookingComplete}
+            username={username}
+            isVisible={showBookingForm}
+            onHide={handleCancelBooking}
+            fetchEvents={fetchEvents}
+            fetchMyBooking={fetchMyBooking}
+          />
         </div>
       )}
     </div>

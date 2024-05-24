@@ -35,7 +35,6 @@ function UserCreation({ onUserCreation }) {
 
   return (
     <div className="user-creation-container">
-      <h2>Create User</h2>
       <input
         type="text"
         placeholder="First Name"

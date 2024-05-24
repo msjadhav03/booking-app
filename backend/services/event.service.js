@@ -39,6 +39,7 @@ const fetchAllEvent = async () => {
 const deleteEventById = async (eventId) => {
   try {
     const result = await Event.findOneAndDelete({ _id: eventId });
+    
     return result;
   } catch (error) {
     console.error(error);

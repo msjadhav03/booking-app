@@ -1,5 +1,12 @@
 /* App.css */
-
+.final {
+  background-image: url(main-background.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  color: white;
+}
 .main-container {
   flex-direction: row;
   align-items: center;
@@ -32,6 +39,9 @@ h2 {
   text-align: center;
   border-radius: 15px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header-box p {
@@ -40,6 +50,9 @@ h2 {
   margin-bottom: 20px;
 }
 
+.header-box .logout-button {
+  margin-top: 10px;
+}
 .open-btn {
   background-color: #4caf50; /* Green */
   border: none;
@@ -152,10 +165,20 @@ body {
 }
 
 .create-event {
-  background-color: #f0f0f0; /* Light Grey */
-  border-radius: 15px;
-  padding: 12px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  width: 500px; /* Adjust width as needed */
+  max-width: 100%; /* Limit maximum width to 90% of viewport */
+  height: auto; /* Automatically adjust height based on content */
+  max-height: 90vh; /* Limit maximum height to 90% of viewport height */
+  overflow-y: auto; /* Add vertical scroll if content overflows */
 }
 
 .create-event h2 {
@@ -164,6 +187,11 @@ body {
   font-size: 28px;
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.create-event input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px; /* Add margin between input fields */
 }
 
 .input {
@@ -303,6 +331,11 @@ tr:hover {
   align-items: center;
   justify-content: center;
   height: 50vh;
+  background-image: url(main-background.jpg);
+  background-position: center;
+  background-repeat: inherit;
+  background-attachment: scroll;
+  background-size: cover;
 }
 
 .login-container h2 {
@@ -345,6 +378,11 @@ tr:hover {
   align-items: center;
   justify-content: center;
   height: 60vh;
+  background-image: url(main-background.jpg);
+  background-position: center;
+  background-repeat: inherit;
+  background-attachment: scroll;
+  background-size: cover;
 }
 
 .user-creation-container h2 {
@@ -379,4 +417,85 @@ tr:hover {
 
 .user-creation-container .button:hover {
   background-color: #45a049;
+}
+
+/* Ensure that the booking form is displayed properly */
+
+.booking-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.booking-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  max-width: 90%;
+  height: auto;
+  max-height: 80%;
+}
+
+.booking-form h2 {
+  margin-top: 0;
+}
+
+.booking-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.booking-form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.booking-form button[type="submit"],
+.booking-form button[type="button"] {
+  width: calc(50% - 5px); /* Adjust width of buttons to take half the space */
+  margin-right: 5px; /* Add margin between buttons */
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #ffffff;
+  cursor: pointer;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.booking-form button[type="submit"]:hover,
+.booking-form button[type="button"]:hover {
+  background-color: #0056b3;
+}
+
+.booking-form .error {
+  color: #ff0000;
+  margin-top: 5px;
+}
+
+.logout-button {
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #ff3d00;
 }
