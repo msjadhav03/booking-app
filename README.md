@@ -67,9 +67,6 @@ npm run start
 
   ![Booking Event](./asset/book_event.png)
 
-- ### Fetch Habit
-  ![Update Habit](./asset/fetch_h.png)
-
 ## Contributing 🤝
 
 Guidelines for contributing to the project. Include information about setting up a development environment and making pull requests.
