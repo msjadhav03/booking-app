@@ -1,52 +1,90 @@
-# Booking application
+# MERN Fullstack Booking Application 🦕 - (MongoDB, Express.js, React.js and Node.js)
 
-# POST
+A brief description of what your project does and why it is useful.
 
-Create Events
-`http://localhost:3001/V1/api/events`
+## Table of Contents 📋
 
-```js
-{
-"name":"React.js Global Summit",
-"date":"06/03/2024",
-"capacity":100
-}
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
+
+## Installation 💻
+
+```sh
+# Change directory respecitve backend and frontend directory and use below commands
+npm i
+npm i --save-dev
+
 ```
 
-# GET
+```sh
+# Clone the repository
+git clone https://github.com/msjadhav03/booking-app.git
 
-Find Events
-`http://localhost:3001/V1/api/events`
+# Navigate to the project directory
+cd booking-app.git
 
-# POST
+# Install dependencies by moving in frontend and backend respectively
+npm install
 
-Book Ticket
-`http://localhost:3001/V1/api/bookings`
+# Install Dev Dependencies
+npm install --save-dev
 
-Body
-
-```json
-{
-  "user": "m.s.jadhav",
-  "eventId": "65e055f7eca196e8e3824115"
-}
 ```
 
-# PUT
+## Usage
 
-Update Event
-`http://localhost:3001/V1/api/events`
+```sh
 
-Body
+# Start
+npm run start
 
-```json
-{
-  "eventId": "65e055f7eca196e8e3824115",
-  "name": "Some Event Name"
-}
 ```
 
-# DELETE
+## Features ✨
 
-Delete Event
-`http://localhost:3001/V1/api/events/65e05677a22c2fc042de120c`
+- ### Login Page
+
+  ![Main Image](./asset/main.png)
+
+- ### General Dashboard
+
+  ![General Dashboard](./asset/general_user.png)
+
+- ### Organizer Dashboard
+
+  ![Organizer Dashboard](./asset/organizer.png)
+
+- ### Event Listing
+
+  ![Event Listing](./asset/events.png)
+
+- ### Booking Event
+
+  ![Booking Event](./asset/book_event.png)
+
+- ### Fetch Habit
+  ![Update Habit](./asset/fetch_h.png)
+
+## Contributing 🤝
+
+Guidelines for contributing to the project. Include information about setting up a development environment and making pull requests.
+
+### Fork the repository
+
+- Create your feature branch (git checkout -b feature/your-feature)
+- Commit your changes (git commit -am 'Add some feature')
+- Push to the branch (git push origin feature/your-feature)
+  Create a new Pull Request
+
+## License 📄
+
+This project is licensed under the [ISC License](https://opensource.org/licenses/ISC):
+
+## Contact 📧
+
+[Manisha Jadhav](https://github.com/m.s.jadhav03)
