@@ -2,6 +2,8 @@
 
 Booking app is a fullstack application for event booking and organize event.
 
+![MERN stack](./asset/final_mern.png)
+
 ## Table of Contents 📋
 
 - [Installation](#installation)
