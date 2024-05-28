@@ -1,6 +1,6 @@
 # MERN Fullstack Booking Application 🦕 - (MongoDB, Express.js, React.js and Node.js)
 
-A brief description of what your project does and why it is useful.
+Booking app is a fullstack application for event booking and organize event.
 
 ## Table of Contents 📋
 
